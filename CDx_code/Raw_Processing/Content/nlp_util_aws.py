@@ -26,6 +26,11 @@ comp_intent_score_column =['neg_prob','nut_prob','pos_prob','label','negative_ep
 
 #Fetch content from audio using AWS STT API
 def aws_transcribe(job_uri):
+    """
+        Using amazon aws transcribe speech to text api, extracting text from audio file.
+        Returns: 
+              Dataframe with final transcript(text) and confidence score for each word from transcript
+    """
     transcribe = boto3.client('transcribe', region_name='us-west-2')
     job_name = "RandallTest2"
     text_df = ""
@@ -50,11 +55,15 @@ def aws_transcribe(job_uri):
                     text_df = pd.DataFrame(text_json.json())
     except Exception as e:
         logger.error('Exception to convert audio to text {} for {}'.format(e,job_uri))
-    
     return text_df
 
 
 def aws_response_parse(job_uri):
+    """
+        Parsing AWS api response to fetch text
+        Returns:
+            Final transcript(Text) and Rate of Speech based on confidence score for each word from Transcript
+    """
     transcript_text = ""
     ros = 0
     try:
@@ -206,6 +215,13 @@ def collect_content_result(audio_file,output_wav,stage_bucket_url,sentiment_api,
 ###########################################################
 
 def ros_speech(item_trans):
+    """
+        Computing Rate of speech using start and end time for each word(getting start and end time from AWS api response)
+        where confidence score should be greater than .60
+        
+        Returns:
+            Rate of speech: No of words per second
+    """
     time_count = []
     confidence = 0
     ros_speech = 0
