@@ -11,7 +11,7 @@ def formant_list(formant,snd):
     """
     Getting formant frequency per second
     Args:
-        foramnt: Formant object for sound wave
+        formant: Formant object for sound wave
         snd: Parselmouth sound object
     Returns:
         List of first and second formant for each frame
