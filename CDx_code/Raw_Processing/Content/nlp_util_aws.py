@@ -139,7 +139,7 @@ def compute_composite_score(comp_lst):
         Returns:
             Compsite score for negative/positive and neutral emotion
     """
-    final_comp_list = [''*4]
+    final_comp_list = ['']*4
     try:
         if len(comp_lst)==0 or comp_lst[0] == '':
             return final_comp_list
@@ -237,7 +237,8 @@ def ros_speech(item_trans):
         except:
             logger.error('Exception while computing ROS {} '.format(e))
             continue
-    ros_speech = len(time_count)/np.sum(time_count)
+    if len(time_count)>0:
+        ros_speech = len(time_count)/np.sum(time_count)
     return ros_speech
 
 ###########################################################
