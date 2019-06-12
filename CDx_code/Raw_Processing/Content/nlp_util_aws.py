@@ -273,7 +273,7 @@ def word_percent(intent_df):
             percentage value for word repetition
     """
     #Removing Punctuation from Text
-    intent_df['text_aws_punc'] = intent_df['text_aws'].str.replace('[^\w\s]','')
+    intent_df['text_aws_punc'] = intent_df['text_aws'].astype(str).str.replace('[^\w\s]','')
     word_dict,pid,qid = word_count(intent_df)
     percent_val = 0
     if len(word_dict)>1:
